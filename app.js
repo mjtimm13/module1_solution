@@ -3,7 +3,10 @@
 
 angular.module('LunchCheck', [])
 
-.controller('LunchCheckController', function ($scope) {
+.controller('LunchCheckController', LunchCheckController);
+LunchCheckController.$inject = ['$scope'] ;
+
+function LunchCheckController($scope) {
   $scope.lunchList = "";
   $scope.itemCount = 0;
   $scope.evalMessage = "";
@@ -14,6 +17,8 @@ angular.module('LunchCheck', [])
     $scope.itemCount = totalItems;
     var lunchMessage = evaluateList(totalItems);
     $scope.evalMessage = lunchMessage;
+    var lunchMessageColor = setMessageTextColor(lunchMessage);
+    $scope.evalMessageColor = lunchMessageColor;
   };
 
 
@@ -30,10 +35,10 @@ angular.module('LunchCheck', [])
    )
 
    console.log("Number of items="+stringItems);
-    console.log(itemsArray);
+   console.log(itemsArray);
 
     return stringItems;
-  }
+  } // end of calculateItemsInString
 
   function evaluateList(int) {
     var lunchListMessage = "Please enter data first.";
@@ -44,16 +49,32 @@ angular.module('LunchCheck', [])
       lunchListMessage = "Enjoy!"
     }
     else {
-      lunchListMessage = "Please enter data first";
+      lunchListMessage = "Please enter data first.";
     }
     /*for (var i = 0; i < string.length; i++) {
       totalStringValue += string.charCodeAt(i);
     }*/
 
     return lunchListMessage;
-  }
+  } // end of evaluateList
 
-});
+  function setMessageTextColor(string) {
+    var messageTextColor = "0,0,0";
+    console.log(string);
+    if (string ==  "Too Much!") {
+      messageTextColor = "0,128,0";
+    }
+    else if (string == "Enjoy!") {
+      messageTextColor = "0,128,0";
+    }
+    else {
+       messageTextColor = "255,0,0";
+    }
+    console.log(messageTextColor);
+    return messageTextColor;
 
+  } // end of setMessageTextColor
+
+} // end of LunchCheckController
 
 })();
